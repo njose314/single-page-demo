@@ -7,114 +7,63 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #0f172a;
+            background: #020617;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            touch-action: manipulation;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; overflow: hidden; touch-action: manipulation;
         }
         #game-container {
-            position: relative;
-            width: 100vw;
-            max-width: 100vw;
-            height: 100vh;
-            max-height: 100vh;
-            overflow: hidden;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+            position: relative; width: 100vw; max-width: 100vw;
+            height: 100vh; max-height: 100vh; overflow: hidden;
+            box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
         }
-        canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
+        canvas { display: block; width: 100%; height: 100%; touch-action: none; }
         #score {
-            position: absolute;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 42px;
-            font-weight: 800;
-            color: #fff;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.6);
-            z-index: 20;
-            letter-spacing: 2px;
+            position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+            font-size: 44px; font-weight: 900; color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.7); z-index: 20; letter-spacing: 3px;
         }
         .overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 30;
-            background: rgba(15, 23, 42, 0.85);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 30; background: rgba(2, 6, 23, 0.88);
         }
-        .overlay h1 {
-            font-size: 52px;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 12px;
-            text-align: center;
-            letter-spacing: -1px;
-        }
-        .overlay p {
-            font-size: 22px;
-            color: #94a3b8;
-            margin-bottom: 30px;
-            text-align: center;
-        }
+        .overlay h1 { font-size: 58px; font-weight: 900; color: #fff; margin-bottom: 6px; text-align: center; letter-spacing: -2px; }
+        .overlay p { font-size: 20px; color: #94a3b8; margin-bottom: 28px; text-align: center; max-width: 300px; }
         button {
-            padding: 18px 48px;
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            border: none;
-            border-radius: 9999px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 20px 56px; font-size: 21px; font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white; border: none; border-radius: 9999px; cursor: pointer;
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.5);
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase; letter-spacing: 1.5px;
         }
-        button:active {
-            transform: scale(0.95);
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-        }
+        button:active { transform: scale(0.92); box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4); }
         .hidden { display: none !important; }
-        .corporate-bg { background: linear-gradient(180deg, #0f172a 0%, #1e2937 100%); }
     </style>
 </head>
 <body>
     <div id="game-container">
         <canvas id="game"></canvas>
-        
         <div id="score" class="hidden">0</div>
         
-        <!-- Start Screen -->
         <div id="start-screen" class="overlay">
-            <div style="text-align: center;">
-                <div style="font-size: 72px; margin-bottom: 8px;">💼</div>
-                <h1 style="font-size: 56px; color: #fff; margin-bottom: 8px;">DEADLINE<br>DODGER</h1>
-                <p style="font-size: 20px; max-width: 280px;">Dodge meetings.<br>Survive the day.<br>Get promoted.</p>
-                <button id="start-btn" style="margin-top: 20px; font-size: 22px; padding: 20px 60px;">START SHIFT</button>
-                <p style="margin-top: 30px; font-size: 15px; color: #64748b;">Tap anywhere or SPACE to flap</p>
+            <div style="text-align:center;">
+                <div style="font-size:78px; margin-bottom:4px; filter: drop-shadow(0 10px 20px rgba(59,130,246,0.4));">💼</div>
+                <h1 style="font-size:60px; color:#fff; margin-bottom:4px;">DEADLINE<br>DODGER</h1>
+                <p>Dodge the meetings.<br>Survive the sprint.<br>Get that promotion.</p>
+                <button id="start-btn" style="margin-top:18px; font-size:23px; padding:22px 68px;">START SHIFT</button>
+                <p style="margin-top:32px; font-size:15px; color:#64748b;">Tap anywhere or press SPACE</p>
             </div>
         </div>
         
-        <!-- Game Over -->
         <div id="game-over" class="overlay hidden">
-            <div style="text-align: center;">
-                <div style="font-size: 64px; margin-bottom: 10px;">😵</div>
-                <h1 style="font-size: 48px; color: #ef4444; margin-bottom: 8px;">YOU'RE FIRED!</h1>
-                <p style="font-size: 26px; color: #fff; margin: 12px 0;">Promotions: <span id="final-score" style="font-weight: 800; color: #22c55e;">0</span></p>
-                <p id="high-score-text" style="font-size: 18px; color: #94a3b8; margin-bottom: 25px;">Personal Best: <span id="high-score">0</span></p>
-                <button id="restart-btn" style="background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.5);">TRY AGAIN</button>
+            <div style="text-align:center;">
+                <div style="font-size:68px; margin-bottom:8px;">😵‍💫</div>
+                <h1 style="font-size:52px; color:#ef4444; margin-bottom:6px; text-shadow:0 4px 20px rgba(239,68,68,0.5);">YOU'RE FIRED!</h1>
+                <p style="font-size:28px; color:#fff; margin:14px 0 6px;">Promotions: <span id="final-score" style="font-weight:900; color:#22c55e; font-size:34px;">0</span></p>
+                <p style="font-size:17px; color:#64748b; margin-bottom:28px;">Personal Best: <span id="high-score" style="font-weight:700; color:#fff;">0</span></p>
+                <button id="restart-btn" style="background:linear-gradient(135deg,#22c55e,#15803d); box-shadow:0 12px 30px rgba(34,197,94,0.5);">TRY AGAIN</button>
             </div>
         </div>
     </div>
@@ -125,338 +74,238 @@
         const ctx = canvas.getContext('2d', { alpha: true });
         
         let WIDTH = 0, HEIGHT = 0;
-        let player = { x: 0, y: 0, vy: 0, size: 32 };
+        let player = { x: 0, y: 0, vy: 0, size: 30, rot: 0 };
         let obstacles = [];
         let particles = [];
         let score = 0;
         let gameRunning = false;
         let frame = 0;
         let shake = 0;
+        let firstFlap = false;
         let highScore = parseInt(localStorage.getItem('deadlineDodgerHighScore') || '0');
         
-        const GRAVITY = 0.72;
-        const FLAP = -13.5;
-        const SPEED = 3.2;
+        let GRAVITY = 0.18;   // super slow-mo at start
+        let SPEED = 1.1;
+        const NORMAL_GRAVITY = 0.68;
+        const NORMAL_SPEED = 3.1;
+        const FLAP = -12.8;
         
         function resizeCanvas() {
-            WIDTH = Math.min(window.innerWidth, 480);
-            HEIGHT = Math.min(window.innerHeight, 854); // 9:16 ratio
+            const maxW = Math.min(window.innerWidth, 480);
+            const maxH = Math.min(window.innerHeight, 854);
+            const aspect = 9/16;
+            if (maxW / maxH > aspect) { WIDTH = maxH * aspect; HEIGHT = maxH; }
+            else { WIDTH = maxW; HEIGHT = maxW / aspect; }
             
-            // Maintain 9:16 aspect ratio
-            const aspect = 9 / 16;
-            if (WIDTH / HEIGHT > aspect) {
-                WIDTH = HEIGHT * aspect;
-            } else {
-                HEIGHT = WIDTH / aspect;
-            }
+            canvas.width = WIDTH; canvas.height = HEIGHT;
+            canvas.style.width = WIDTH + 'px'; canvas.style.height = HEIGHT + 'px';
             
-            canvas.width = WIDTH;
-            canvas.height = HEIGHT;
-            canvas.style.width = WIDTH + 'px';
-            canvas.style.height = HEIGHT + 'px';
-            
-            if (!gameRunning) {
-                player.x = WIDTH * 0.28;
-                player.y = HEIGHT * 0.48;
-            }
+            if (!gameRunning) { player.x = WIDTH * 0.26; player.y = HEIGHT * 0.47; }
         }
         
         function createObstacle() {
-            const gap = 155;
-            const minY = 90;
-            const maxY = HEIGHT - gap - 90;
+            const gap = 148;
+            const minY = 85; const maxY = HEIGHT - gap - 85;
             const gapY = minY + Math.random() * (maxY - minY);
-            
-            // Corporate obstacle: Meeting + Email
-            obstacles.push({
-                x: WIDTH + 20,
-                top: gapY,
-                bottom: gapY + gap,
-                type: Math.random() > 0.5 ? 'meeting' : 'email',
-                scored: false
-            });
+            obstacles.push({ x: WIDTH + 25, top: gapY, bottom: gapY + gap, type: Math.random() > 0.48 ? 'meeting' : 'email', scored: false });
         }
         
-        function createParticles(x, y, count, color) {
+        function createParticles(x, y, count, color, spread = 5) {
             for (let i = 0; i < count; i++) {
                 particles.push({
                     x, y,
-                    vx: (Math.random() - 0.5) * 6,
-                    vy: (Math.random() - 0.5) * 6 - 2,
-                    life: 28 + Math.random() * 18,
-                    color,
-                    size: 3 + Math.random() * 4
+                    vx: (Math.random()-0.5) * spread,
+                    vy: (Math.random()-0.5) * spread - 1.5,
+                    life: 22 + Math.random()*16,
+                    color, size: 2.5 + Math.random()*3.5
                 });
             }
         }
         
         function update() {
             if (!gameRunning) return;
+            frame++; shake = Math.max(0, shake - 0.8);
             
-            frame++;
-            shake = Math.max(0, shake - 1);
+            // Slow-mo until first flap
+            if (!firstFlap) {
+                GRAVITY = 0.16; SPEED = 0.95;
+            } else {
+                GRAVITY = NORMAL_GRAVITY; SPEED = NORMAL_SPEED;
+            }
             
-            // Physics - mouth-watering feel
             player.vy += GRAVITY;
             player.y += player.vy;
+            player.rot = Math.max(-0.6, Math.min(0.9, player.vy * 0.035));
             
-            // Ceiling bounce (juicy)
-            if (player.y < player.size + 10) {
-                player.y = player.size + 10;
-                player.vy = 1.5;
-                shake = 4;
-                createParticles(player.x, player.y - 15, 8, '#60a5fa');
+            // Ceiling bounce
+            if (player.y < player.size + 8) {
+                player.y = player.size + 8; player.vy = 2.2; shake = 5;
+                createParticles(player.x, player.y - 12, 7, '#60a5fa', 4);
             }
             
-            // Ground collision
-            if (player.y + player.size > HEIGHT - 35) {
-                player.y = HEIGHT - 35 - player.size;
-                endGame();
-                return;
+            // Refined ground collision
+            if (player.y + player.size > HEIGHT - 32) {
+                player.y = HEIGHT - 32 - player.size; endGame(); return;
             }
             
-            // Spawn obstacles
-            if (frame % 78 === 0) {
-                createObstacle();
-            }
+            if (frame % 76 === 0) createObstacle();
             
-            // Update obstacles
             for (let i = obstacles.length - 1; i >= 0; i--) {
-                const obs = obstacles[i];
-                obs.x -= SPEED;
+                const o = obstacles[i]; o.x -= SPEED;
                 
                 // Score
-                if (!obs.scored && obs.x + 70 < player.x) {
-                    obs.scored = true;
-                    score++;
+                if (!o.scored && o.x + 65 < player.x) {
+                    o.scored = true; score++;
                     document.getElementById('score').innerText = score;
-                    createParticles(player.x + 20, player.y - 10, 12, '#22c55e');
-                    shake = 3;
+                    createParticles(player.x + 18, player.y - 8, 14, '#22c55e', 6);
+                    shake = 4;
                 }
                 
-                // Collision
-                if (player.x + player.size > obs.x && player.x - player.size < obs.x + 70) {
-                    if (player.y - player.size < obs.top || player.y + player.size > obs.bottom) {
-                        shake = 12;
-                        createParticles(player.x, player.y, 25, '#ef4444');
-                        endGame();
-                        return;
+                // REFINED COLLISION (smaller hitbox)
+                const px = player.x, py = player.y;
+                const hitW = 18, hitH = 26; // tighter hitbox
+                if (px + hitW > o.x && px - hitW < o.x + 62) {
+                    if (py - hitH < o.top || py + hitH > o.bottom) {
+                        shake = 14; createParticles(px, py, 28, '#ef4444', 7);
+                        endGame(); return;
                     }
                 }
-                
-                if (obs.x < -80) obstacles.splice(i, 1);
+                if (o.x < -90) obstacles.splice(i, 1);
             }
             
-            // Update particles
+            // Particles
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.18;
-                p.life--;
+                p.x += p.vx; p.y += p.vy; p.vy += 0.22; p.life--;
                 if (p.life <= 0) particles.splice(i, 1);
             }
         }
         
         function draw() {
             ctx.save();
-            if (shake > 0) {
-                ctx.translate(
-                    (Math.random() - 0.5) * shake * 1.2,
-                    (Math.random() - 0.5) * shake * 1.2
-                );
-            }
+            if (shake > 0) ctx.translate((Math.random()-0.5)*shake*1.1, (Math.random()-0.5)*shake*1.1);
             
-            // Office background
-            const grad = ctx.createLinearGradient(0, 0, 0, HEIGHT);
-            grad.addColorStop(0, '#0f172a');
-            grad.addColorStop(0.35, '#1e2937');
-            grad.addColorStop(1, '#334155');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+            // Sleek office bg
+            const g = ctx.createLinearGradient(0,0,0,HEIGHT);
+            g.addColorStop(0,'#020617'); g.addColorStop(0.4,'#0f172a'); g.addColorStop(1,'#1e2937');
+            ctx.fillStyle = g; ctx.fillRect(0,0,WIDTH,HEIGHT);
             
-            // Office floor
-            ctx.fillStyle = '#475569';
-            ctx.fillRect(0, HEIGHT - 38, WIDTH, 38);
-            ctx.fillStyle = '#64748b';
-            ctx.fillRect(0, HEIGHT - 42, WIDTH, 4);
+            // Floor
+            ctx.fillStyle = '#334155'; ctx.fillRect(0, HEIGHT-34, WIDTH, 34);
+            ctx.fillStyle = '#475569'; ctx.fillRect(0, HEIGHT-38, WIDTH, 4);
             
-            // Ceiling lights
-            ctx.fillStyle = 'rgba(148, 163, 184, 0.15)';
-            for (let i = 60; i < WIDTH; i += 110) {
-                ctx.fillRect(i, 12, 70, 8);
-            }
+            // Ceiling grid
+            ctx.strokeStyle = 'rgba(148,163,184,0.12)'; ctx.lineWidth = 1;
+            for (let x=40; x<WIDTH; x+=55) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,HEIGHT); ctx.stroke(); }
             
             // Draw obstacles
-            obstacles.forEach(obs => {
-                if (obs.type === 'meeting') {
-                    // Meeting bar (corporate red)
-                    ctx.fillStyle = '#ef4444';
-                    ctx.fillRect(obs.x, 0, 68, obs.top);
-                    ctx.fillRect(obs.x, obs.bottom, 68, HEIGHT - obs.bottom);
+            obstacles.forEach(o => {
+                if (o.type === 'meeting') {
+                    // Red meeting bar with corporate polish
+                    ctx.fillStyle = '#b91c1c'; ctx.fillRect(o.x, 0, 62, o.top);
+                    ctx.fillStyle = '#ef4444'; ctx.fillRect(o.x+3, 3, 56, o.top-6);
+                    ctx.fillStyle = '#fff'; ctx.font = '700 11px Segoe UI'; ctx.fillText('MEETING', o.x+7, o.top-14);
+                    ctx.fillStyle = '#450a0a'; ctx.fillRect(o.x-2, o.top-20, 66, 20);
                     
-                    // Meeting label
-                    ctx.fillStyle = '#fff';
-                    ctx.font = 'bold 13px Segoe UI';
-                    ctx.fillText('MEETING', obs.x + 6, obs.top - 18);
-                    
-                    // Top cap
-                    ctx.fillStyle = '#b91c1c';
-                    ctx.fillRect(obs.x - 3, obs.top - 22, 74, 22);
+                    ctx.fillStyle = '#b91c1c'; ctx.fillRect(o.x, o.bottom, 62, HEIGHT-o.bottom);
+                    ctx.fillStyle = '#ef4444'; ctx.fillRect(o.x+3, o.bottom+3, 56, HEIGHT-o.bottom-6);
+                    ctx.fillStyle = '#450a0a'; ctx.fillRect(o.x-2, o.bottom, 66, 20);
                 } else {
-                    // Email envelope (flying)
-                    ctx.fillStyle = '#3b82f6';
-                    ctx.fillRect(obs.x + 8, obs.top - 12, 52, 38);
-                    ctx.fillStyle = '#1e40af';
-                    ctx.beginPath();
-                    ctx.moveTo(obs.x + 8, obs.top - 12);
-                    ctx.lineTo(obs.x + 34, obs.top + 7);
-                    ctx.lineTo(obs.x + 60, obs.top - 12);
-                    ctx.fill();
-                    
-                    ctx.fillStyle = '#fff';
-                    ctx.font = 'bold 11px Segoe UI';
-                    ctx.fillText('URGENT', obs.x + 14, obs.top + 14);
+                    // Flying urgent email
+                    ctx.fillStyle = '#1e40af'; ctx.fillRect(o.x+6, o.top-8, 50, 34);
+                    ctx.fillStyle = '#3b82f6'; ctx.fillRect(o.x+8, o.top-6, 46, 30);
+                    ctx.fillStyle = '#1e3a8a';
+                    ctx.beginPath(); ctx.moveTo(o.x+8, o.top-6); ctx.lineTo(o.x+31, o.top+9); ctx.lineTo(o.x+54, o.top-6); ctx.fill();
+                    ctx.fillStyle = '#fff'; ctx.font = '700 10px Segoe UI'; ctx.fillText('URGENT', o.x+13, o.top+11);
+                    // Stamp
+                    ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2; ctx.strokeRect(o.x+38, o.top-2, 14, 14);
                 }
             });
             
-            // Draw player (Corporate Employee)
-            ctx.save();
-            ctx.translate(player.x, player.y);
+            // Refined Corporate Employee sprite
+            ctx.save(); ctx.translate(player.x, player.y); ctx.rotate(player.rot);
             
-            // Body (suit)
-            ctx.fillStyle = '#1e3a8a';
-            ctx.fillRect(-14, -18, 28, 36);
+            // Shadow
+            ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(3, 22, 16, 5, 0, 0, Math.PI*2); ctx.fill();
             
-            // Tie
+            // Suit body
+            ctx.fillStyle = '#1e3a8a'; ctx.fillRect(-13, -16, 26, 34);
+            ctx.fillStyle = '#172554'; ctx.fillRect(-10, -13, 20, 28);
+            
+            // Tie (animated flap)
             ctx.fillStyle = '#ef4444';
-            ctx.beginPath();
-            ctx.moveTo(0, -14);
-            ctx.lineTo(-6, 8);
-            ctx.lineTo(0, 12);
-            ctx.lineTo(6, 8);
-            ctx.fill();
+            ctx.beginPath(); ctx.moveTo(0, -12); ctx.lineTo(-5, 9); ctx.lineTo(0, 14); ctx.lineTo(5, 9); ctx.fill();
             
             // Head
-            ctx.fillStyle = '#fed7aa';
-            ctx.beginPath();
-            ctx.arc(0, -24, 13, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.fillStyle = '#fed7aa'; ctx.beginPath(); ctx.arc(0, -22, 11, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#334155'; ctx.beginPath(); ctx.ellipse(0, -27, 10, 5, 0, 0, Math.PI*2); ctx.fill(); // hair
             
-            // Hair
-            ctx.fillStyle = '#334155';
-            ctx.beginPath();
-            ctx.ellipse(0, -30, 12, 6, 0, 0, Math.PI * 2);
-            ctx.fill();
+            // Eye + brow
+            ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(4, -24, 3.5, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#0f172a'; ctx.beginPath(); ctx.arc(5, -24, 1.8, 0, Math.PI*2); ctx.fill();
+            ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(-2, -29); ctx.lineTo(8, -29); ctx.stroke();
             
-            // Briefcase
-            ctx.fillStyle = '#78350f';
-            ctx.fillRect(16, -6, 18, 14);
-            ctx.fillStyle = '#451a03';
-            ctx.fillRect(18, -2, 14, 6);
+            // Briefcase (swinging)
+            const bx = 15 + Math.sin(frame*0.12)*2;
+            ctx.fillStyle = '#78350f'; ctx.fillRect(bx-2, -4, 16, 13);
+            ctx.fillStyle = '#451a03'; ctx.fillRect(bx, 0, 12, 5);
             
-            // Eye
-            ctx.fillStyle = '#fff';
-            ctx.beginPath();
-            ctx.arc(5, -26, 4, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = '#0f172a';
-            ctx.beginPath();
-            ctx.arc(6, -26, 2, 0, Math.PI * 2);
-            ctx.fill();
+            // Arm
+            ctx.strokeStyle = '#fed7aa'; ctx.lineWidth = 4; ctx.lineCap = 'round';
+            ctx.beginPath(); ctx.moveTo(8, -8); ctx.lineTo(bx+4, 2); ctx.stroke();
             
             ctx.restore();
             
             // Particles
             particles.forEach(p => {
-                ctx.globalAlpha = Math.max(0, p.life / 40);
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.globalAlpha = Math.max(0, p.life/38);
+                ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
             });
             ctx.globalAlpha = 1;
-            
             ctx.restore();
         }
         
-        function gameLoop() {
-            update();
-            draw();
-            if (gameRunning) requestAnimationFrame(gameLoop);
-        }
+        function gameLoop() { update(); draw(); if (gameRunning) requestAnimationFrame(gameLoop); }
         
         function flap() {
-            if (!gameRunning) {
-                startGame();
-                return;
-            }
-            player.vy = FLAP;
-            shake = 5;
-            createParticles(player.x - 10, player.y + 5, 9, '#60a5fa');
+            if (!gameRunning) { startGame(); return; }
+            player.vy = FLAP; shake = 6;
+            createParticles(player.x-8, player.y+4, 10, '#60a5fa', 5);
+            if (!firstFlap) { firstFlap = true; }
         }
         
         function startGame() {
             resizeCanvas();
-            player.x = WIDTH * 0.28;
-            player.y = HEIGHT * 0.48;
-            player.vy = 0;
-            obstacles = [];
-            particles = [];
-            score = 0;
-            frame = 0;
-            shake = 0;
+            player.x = WIDTH * 0.26; player.y = HEIGHT * 0.47; player.vy = 0; player.rot = 0;
+            obstacles = []; particles = []; score = 0; frame = 0; shake = 0; firstFlap = false;
             
             document.getElementById('score').innerText = '0';
             document.getElementById('score').classList.remove('hidden');
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('game-over').classList.add('hidden');
             
-            createObstacle();
-            createObstacle();
-            obstacles[1].x = WIDTH * 1.6;
+            createObstacle(); createObstacle(); obstacles[1].x = WIDTH * 1.55;
             
-            gameRunning = true;
-            gameLoop();
+            gameRunning = true; gameLoop();
         }
         
         function endGame() {
             gameRunning = false;
-            
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('deadlineDodgerHighScore', highScore);
-            }
-            
+            if (score > highScore) { highScore = score; localStorage.setItem('deadlineDodgerHighScore', highScore); }
             document.getElementById('final-score').innerText = score;
             document.getElementById('high-score').innerText = highScore;
             document.getElementById('game-over').classList.remove('hidden');
             document.getElementById('score').classList.add('hidden');
         }
         
-        // Events
         document.getElementById('start-btn').addEventListener('click', startGame);
         document.getElementById('restart-btn').addEventListener('click', startGame);
-        
-        canvas.addEventListener('touchstart', e => { e.preventDefault(); flap(); });
+        canvas.addEventListener('touchstart', e => {e.preventDefault(); flap();});
         canvas.addEventListener('mousedown', flap);
+        document.addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); flap(); } });
+        window.addEventListener('resize', () => { if (!gameRunning) resizeCanvas(); });
         
-        document.addEventListener('keydown', e => {
-            if (e.code === 'Space') { e.preventDefault(); flap(); }
-        });
-        
-        window.addEventListener('resize', () => {
-            if (!gameRunning) resizeCanvas();
-        });
-        
-        // Boot
-        function init() {
-            resizeCanvas();
-            player.x = WIDTH * 0.28;
-            player.y = HEIGHT * 0.48;
-            draw();
-            document.getElementById('start-screen').classList.remove('hidden');
-        }
+        function init() { resizeCanvas(); player.x = WIDTH*0.26; player.y = HEIGHT*0.47; draw(); document.getElementById('start-screen').classList.remove('hidden'); }
         init();
     </script>
 </body>
